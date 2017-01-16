@@ -16,14 +16,7 @@ int kmain()
   // kprint("-------------------------\n\n");
 
   vga_init();
-
-  u32 x;
-  u32 y;
-  for (x=0; x<320; x++) {
-    for(y=0; y<200; y++) {
-      put_pixel(x, y, 0x09);
-    }
-  }
+  blue_screen();
 
   return 0;
 }

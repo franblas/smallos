@@ -13,8 +13,10 @@
 #define ATTRIBUTE_CONTROLLER_WRITE_PORT 0x3C0
 #define ATTRIBUTE_CONTROLLER_RESET_PORT 0x3DA
 
-#define FB_COMMAND_PORT 0x3D4
-#define FB_DATA_PORT 0x3D5
+#define	NB_SEQUENCER_REGS	5
+#define	NB_CRTC_REGS 25
+#define	NB_GRAPHICS_CONTROLLER_REGS 9
+#define	NB_ATTRIBUTE_CONTROLLER_REGS 21
 
 #define VGA_MODE_WIDTH 320
 #define VGA_MODE_HEIGHT 200
@@ -41,7 +43,7 @@ u8 graphical_mode_320x200x256[] = {
 	0x41, 0x00, 0x0F, 0x00,	0x00
 };
 
-u8 text_mode_80x25_text[] = {
+u8 text_mode_80x25[] = {
 /* MISC */
 	0x67,
 /* SEQ */
@@ -67,7 +69,7 @@ void write_registers(u8* graphical_mode)
   outb(MISC_PORT, *graphical_mode);
   graphical_mode++;
 
-  for (j=0; j<5; j++) {
+  for (j=0; j<NB_SEQUENCER_REGS; j++) {
     outb(SEQUENCER_INDEX_PORT, j);
     outb(SEQUENCER_DATA_PORT, *graphical_mode);
     graphical_mode++;
@@ -81,19 +83,19 @@ void write_registers(u8* graphical_mode)
   graphical_mode[0x03] |= 0x80;
   graphical_mode[0x11] &= ~0x80;
 
-  for (j=0; j<25; j++) {
+  for (j=0; j<NB_CRTC_REGS; j++) {
     outb(CRTC_INDEX_PORT, j);
     outb(CRTC_DATA_PORT, *graphical_mode);
     graphical_mode++;
   }
 
-  for (j=0; j<9; j++) {
+  for (j=0; j<NB_GRAPHICS_CONTROLLER_REGS; j++) {
     outb(GRAPHICS_CONTROLLER_INDEX_PORT, j);
     outb(GRAPHICS_CONTROLLER_DATA_PORT, *graphical_mode);
     graphical_mode++;
   }
 
-  for (j=0; j<21; j++) {
+  for (j=0; j<NB_ATTRIBUTE_CONTROLLER_REGS; j++) {
     (void)inb(ATTRIBUTE_CONTROLLER_RESET_PORT);
     outb(ATTRIBUTE_CONTROLLER_INDEX_PORT, j);
     outb(ATTRIBUTE_CONTROLLER_WRITE_PORT, *graphical_mode);
@@ -144,4 +146,15 @@ void put_pixel(u32 x, u32 y, u8 color_code)
 void vga_init()
 {
   set_mode(VGA_MODE_WIDTH, VGA_MODE_HEIGHT, VGA_MODE_COLOR_DEPTH);
+}
+
+void blue_screen()
+{
+  u32 x;
+  u32 y;
+  for (x=0; x<VGA_MODE_WIDTH; x++) {
+    for(y=0; y<VGA_MODE_HEIGHT; y++) {
+      put_pixel(x, y, 0x09);
+    }
+  }
 }
