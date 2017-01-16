@@ -11,9 +11,9 @@ int kmain()
   keyboard_init();
 
   // clear_screen();
-  // screen_write("-------------------------\n");
-  // screen_write("Welcome to small OS!\n");
-  // screen_write("-------------------------\n\n");
+  // kprint("-------------------------\n");
+  // kprint("Welcome to small OS!\n");
+  // kprint("-------------------------\n\n");
 
   vga_init();
 

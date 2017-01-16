@@ -1,6 +1,6 @@
 #include "io.h"
 #include "irq.h"
-#include "framebuffer.h"
+#include "kprintf.h"
 
 #define TIMER_CMD 0x43
 #define TIMER_CHANNEL_0_DATA 0x40
@@ -17,7 +17,7 @@ void timer_handler(registers r)
 
     // Every 18 clocks (~= 1sec), it displays a message on the screen
     if (timer_ticks % 18 == 0) {
-        screen_write("A tick ");
+        kprint("A tick ");
     }
 }
 

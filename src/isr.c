@@ -1,5 +1,5 @@
 #include "isr.h"
-#include "framebuffer.h"
+#include "kprintf.h"
 
 #define EXCEPTIONS_NB 32
 #define DEFINED_EXCEPTIONS_NB 19
@@ -33,12 +33,12 @@ void isr_handler(registers r)
 {
     u32 n_interupt = r.int_no;
     if (n_interupt<EXCEPTIONS_NB && n_interupt>DEFINED_EXCEPTIONS_NB-1) {
-        screen_write("Received a reserved interrupt!");
+        kprint("Received a reserved interrupt!");
     }
     else if (n_interupt<=DEFINED_EXCEPTIONS_NB-1) {
-        screen_write(exception_msg[n_interupt]);
+        kprint(exception_msg[n_interupt]);
     } else {
-        screen_write("Unknown interrupt");
+        kprint("Unknown interrupt");
     }
     for (;;); // handle forever
 }

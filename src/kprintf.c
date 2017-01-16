@@ -82,7 +82,7 @@ void write_char(char c)
   }
 }
 
-void screen_write(char str[])
+void kprint(char str[])
 {
   u32 i = 0;
   while(str[i] != NULL_CHAR) {

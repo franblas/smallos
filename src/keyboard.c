@@ -1,7 +1,7 @@
 #include "keyboard.h"
 #include "io.h"
 #include "irq.h"
-#include "framebuffer.h"
+#include "kprintf.h"
 
 // US Keyboard Layout scancode table
 u8 kbdus[128] = {
