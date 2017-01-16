@@ -1,0 +1,1 @@
+#ifndef VGA_H#define VGA_H#include "common.h"void write_registers(u8* graphical_mode);void set_mode(u32 width, u32 height, u32 color_depth);bool supported_mode(u32 width, u32 height, u32 color_depth);void put_pixel(u32 x, u32 y, u8 color_code);// u8* get_fb_segment();void vga_init();#endif /* VGA_H */
