@@ -1,4 +1,4 @@
-#include "framebuffer.h"
+#include "kprintf.h"
 #include "io.h"
 
 /* Colors for framebuffer */
